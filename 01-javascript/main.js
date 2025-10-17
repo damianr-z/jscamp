@@ -1,11 +1,10 @@
-import { state } from './config.js'
+import { state } from './config.js';
 
-import './fetch-data.js'
-import './filter.js'
-import './apply-button.js'
-import './devjobs-avatar-element.js'
+import './fetch-data.js';
+import './filters.js';
+import './apply-button.js';
+import './devjobs-avatar-element.js';
 
-state.count++
+state.count++;
 
-console.log(state)
-
+console.log(state);
