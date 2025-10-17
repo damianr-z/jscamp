@@ -7,13 +7,14 @@ fetch('./data.json') /* fetch es asíncrono */
     return response.json();
   })
   .then((jobs) => {
+
     jobs.forEach((job) => {
       const article = document.createElement('article');
       article.className = 'job-listing-card';
 
+      article.dataset.technology = job.data.technology;
       article.dataset.modalidad = job.data.modalidad;
       article.dataset.nivel = job.data.nivel;
-      article.dataset.technology = job.data.technology;
 
       article.innerHTML = `<section class="jobHeader">
         <div>
@@ -28,6 +29,7 @@ fetch('./data.json') /* fetch es asíncrono */
 
       container.appendChild(article);
     });
+
   });
 
 // <article data-experience="junior" class="jobPost">
@@ -46,3 +48,4 @@ fetch('./data.json') /* fetch es asíncrono */
 //   </p>
 // </article>
 ///
+
