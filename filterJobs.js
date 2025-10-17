@@ -9,19 +9,17 @@ function filterJobs() {
   const locationValue = locationSelect.value;
   const experienceValue = experienceSelect.value.toLowerCase();
 
-
   jobPosts.forEach((job) => {
     const jobContent =
       job.innerHTML.toLowerCase() || job.textContent.toLowerCase();
-    const modalidad = job.getAttribute('data-modalidad');
-    console.log('this is the job',job[0]);
 
     // match when no value is selected or when the whole word appear in the job content
     let techMatch =
       !techValue || new RegExp(`\\b${techValue}\\b`, 'i').test(jobContent);
+
     let locationMatch =
-      !modalidad ||
-      new RegExp(`\\b${locationValue}\\b`, 'i').test(job.modalidad) ||
+      !locationValue ||
+      new RegExp(`\\b${locationValue}\\b`, 'i').test(jobContent) ||
       locationValue === job.modalidad;
     let experienceMatch =
       !experienceValue ||
@@ -42,9 +40,9 @@ function filterJobs() {
   });
 }
 
-techSelect.addEventListener('change', () => filterJobs());
-locationSelect.addEventListener('change', () => filterJobs());
-experienceSelect.addEventListener('change', () => filterJobs());
+techSelect.addEventListener('change', filterJobs);
+locationSelect.addEventListener('change', filterJobs);
+experienceSelect.addEventListener('change', filterJobs);
 
 // Initial filter on page load
 filterJobs();

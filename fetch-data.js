@@ -24,6 +24,8 @@ fetch('./data.json') /* fetch es asíncrono */
           </section>
           <p>${job.descripcion}</p>`;
 
+          console.log(article);
+
       container.appendChild(article);
     });
   });
