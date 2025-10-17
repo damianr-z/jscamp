@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jobs</title>
     <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="main.js"></script>
   </head>
   <body>
     <header class="jobsHeader">
@@ -60,37 +61,29 @@
         <fieldset>
           <label for="technology">Technology</label>
           <select id="technology" name="technology">
-            <option value="technology" disabled selected>technology</option>
-            <option value="javascript">javascript</option>
+            <option value="">Tecnología</option>
+            <option value="javascript">JavaScript</option>
             <option value="python">Python</option>
             <option value="java">Java</option>
-            <option value="ruby">Ruby</option>
-            <option value="go">Go</option>
+            <option value="react">React</option>
+            <option value="nodejs">Node.js</option>
           </select>
 
           <label for="location">Location</label>
-          <select id="location" name="location">
-            <option value="location" disabled selected>Location</option>
-            <option value="remote">Remoto</option>
-            <option value="onsite">On-site</option>
-            <option value="hibrido">Hybrid</option>
+          <select name="location" id="location">
+            <option value="">Ubicación</option>
+            <option value="Remoto">Remoto</option>
+            <option value="Ciudad de México">Ciudad de México</option>
+            <option value="Guadalajara">Guadalajara</option>
+            <option value="Monterrey">Monterrey</option>
+            <option value="Barcelona">Barcelona</option>
           </select>
 
-          <label for="tipo">Employment Type</label>
-          <select id="tipo" name="tipo">
-            <option value="tipo" disabled selected>Employment Type</option>
-            <option value="fulltime">Full-time</option>
-            <option value="parttime">Part-time</option>
-            <option value="contract">Contract</option>
-            <option value="internship">Scholarship</option>
-          </select>
           <label for="experience">Experience Level</label>
-          <select id="experience" name="experience">
-            <option value="experience" disabled selected>
-              Experience Level
-            </option>
+          <select name="experience" id="experience">
+            <option value="">Nivel de experiencia</option>
             <option value="junior">Junior</option>
-            <option value="mid">Mid</option>
+            <option value="mid">Mid-level</option>
             <option value="senior">Senior</option>
             <option value="lead">Lead</option>
           </select>
@@ -99,68 +92,8 @@
 
       <h2>Search Results</h2>
 
-      <div class="jobList">
-        <article class="jobPost">
-          <section class="jobHeader">
-            <div>
-              <h3>Software Engineer</h3>
-              <p>Tech Solutions Inc | Remote</p>
-            </div>
-            <button>Apply</button>
-          </section>
-          <p>
-            We are looking for a Software Engineer with experience in web
-            development and knowledge of JavaScript, React, and Node.js. The
-            ideal candidate should be able to work in a team environment and
-            have good communication skills.
-          </p>
-        </article>
-
-        <article class="jobPost">
-          <section class="jobHeader">
-            <div>
-              <h3>Data Analyst</h3>
-              <p>Data Driven Co. | Mexico City</p>
-            </div>
-            <button>Apply</button>
-          </section>
-          <p>
-            We are looking for a Data Analyst with experience in handling large
-            datasets and visualization tools. Knowledge of SQL, Python and R is
-            required.
-          </p>
-        </article>
-
-        <article class="jobPost">
-          <section class="jobHeader">
-            <div>
-              <h3>Mobile Application Developer</h3>
-              <p>Mobile Apps Ltd. | Guadalajara</p>
-            </div>
-            <button>Apply</button>
-          </section>
-          <p>
-            We are looking for a mobile application developer with experience in
-            iOS and / or Android. The ideal candidate should have knowledge of
-            Swift, Kotlin, and development of user interfaces.
-          </p>
-        </article>
-
-        <article class="jobPost">
-          <section class="jobHeader">
-            <div>
-              <h3>DevOps Engineer</h3>
-              <p>Cloud Services SA | Remote</p>
-            </div>
-            <button>Apply</button>
-          </section>
-          <p>
-            We are looking for a DevOps Engineer with experience in the
-            management of cloud infrastructure, processes automation and
-            continous integration tools. Knowledge of AWS, Azure and GCP is
-            required.
-          </p>
-        </article>
+      <div class="jobs-listings"></div>
+       
       </div>
       <ul class="pagination">
         <li>
