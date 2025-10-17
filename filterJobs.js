@@ -1,17 +1,6 @@
-const jobsListingSection = document.querySelector('.jobs-listing');
-const jobPosts = document.querySelectorAll('.jobPost');
-
-jobsListingSection.addEventListener('click', (event) => {
-  const element = event.target;
-  if (element.classList.contains('applyBtn')) {
-    element.textContent = 'Applied';
-    element.classList.add('applied');
-    element.disabled = true;
-  }
-});
-
 //////////// Jobs filter ////////////
 
+const jobPosts = document.querySelectorAll('.jobPost');
 const techSelect = document.querySelector('#technology');
 const locationSelect = document.querySelector('#location');
 const experienceSelect = document.querySelector('#experience');
