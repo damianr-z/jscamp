@@ -1,6 +1,5 @@
 //////////// Jobs filter ////////////
-
-const jobPosts = document.querySelectorAll('.jobPost');
+const jobPosts = document.querySelectorAll('.job-listing-card');
 const techSelect = document.querySelector('#technology');
 const locationSelect = document.querySelector('#location');
 const experienceSelect = document.querySelector('#experience');
@@ -10,7 +9,6 @@ function filterJobs() {
   const locationValue = locationSelect.value;
   const experienceValue = experienceSelect.value.toLowerCase();
 
-  console.log(experienceValue);
 
   jobPosts.forEach((job) => {
     const jobContent = job.textContent.toLowerCase();
