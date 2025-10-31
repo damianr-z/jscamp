@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jobs</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="main.js"></script>
+  </head>
+  <body>
+    <header class="jobsHeader">
+      <div class="mainMenu">
+        <h1>DevJobs</h1>
+
+        <nav>
+          <a href="/">Inicio</a>
+          <a href="/jobs.html">Empleos</a>
+          <a href="">Empresas</a>
+          <a href="">Salarios</a>
+        </nav>
+      </div>
+
+      <div class="userActions">
+        <a href="">Subir CV</a>
+        <img src="/uifaces-human-avatar.jpg" class="avatar" />
+      </div>
+    </header>
+
+    <main class="jobsMain">
+      <div class="jobsIntro">
+        <h1>Find your next job</h1>
+        <p>Explore thousands of opportunities in the tech industry</p>
+      </div>
+
+      <form role="search" class="jobSearch">
+        <fieldset>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-search"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+            <path d="M21 21l-6 -6" />
+          </svg>
+
+          <input
+            required
+            type="text"
+            placeholder="Look for companies, jobs, and techonologies"
+          />
+        </fieldset>
+
+        <fieldset>
+          <label for="technology">Technology</label>
+          <select id="technology" name="technology">
+            <option value="">Tecnología</option>
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="react">React</option>
+            <option value="nodejs">Node.js</option>
+          </select>
+
+          <label for="location">Location</label>
+          <select name="location" id="location">
+            <option value="">Ubicación</option>
+            <option value="Remoto">Remoto</option>
+            <option value="Ciudad de México">Ciudad de México</option>
+            <option value="Guadalajara">Guadalajara</option>
+            <option value="Monterrey">Monterrey</option>
+            <option value="Barcelona">Barcelona</option>
+          </select>
+
+          <label for="experience">Experience Level</label>
+          <select name="experience" id="experience">
+            <option value="">Nivel de experiencia</option>
+            <option value="junior">Junior</option>
+            <option value="mid">Mid-level</option>
+            <option value="senior">Senior</option>
+            <option value="lead">Lead</option>
+          </select>
+        </fieldset>
+      </form>
+
+      <h2>Search Results</h2>
+
+      <div class="jobs-listings"></div>
+       
+      </div>
+      <ul class="pagination">
+        <li>
+          <a href="#"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M15 6l-6 6l6 6" /></svg
+          ></a>
+        </li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li>
+          <a href="#"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M9 6l6 6l-6 6" /></svg
+          ></a>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>
