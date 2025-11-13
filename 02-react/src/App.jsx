@@ -1,21 +1,19 @@
-import { useState } from 'react';
+import { Header } from './components/Header.jsx'
+import { Footer } from './components/Footer.jsx'
 
-import { Header } from './components/Header.jsx';
-import Search from './components/Search.jsx';
-import { Footer } from './components/Footer.jsx';
-
-import { SearchFormSection } from './components/SearchFormSection.jsx';
-
-const RESULTS_PER_PAGE = 4;
+import { HomePage } from './pages/Home.jsx'
+import { SearchPage } from './pages/Search.jsx'
+import { Route } from './components/Route.jsx'
 
 function App() {
   return (
     <>
       <Header />
-      <Search />
+      <Route path="/" component={HomePage} />
+      <Route path="/search" component={SearchPage} />
       <Footer />
     </>
-  );
+  )
 }
 
-export default App;
+export default App

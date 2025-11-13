@@ -1,75 +1,86 @@
-import { useId } from 'react';
+import { useId, useState } from "react"
 
-export function SearchFormSection({ onTextFilter, onSearch }) {
-  const idText = useId();
-  const idTechnology = useId();
-  const idLocation = useId();
-  const idExperienceLevel = useId();
+
+let timeoutId = null
+
+const useSearchForm = ({ idTechnology, idLocation, idExperienceLevel, idText, onSearch, onTextFilter }) => {
+  const [searchText, setSearchText] = useState("")
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
+    event.preventDefault()
+    
+    const formData = new FormData(event.currentTarget)
+    
+    if (event.target.name === idText) {
+      return // ya lo manejamos en onChange
+    }
 
     const filters = {
-      technology: formData.get('technology'),
-      location: formData.get('location'),
-      experienceLevel: formData.get('experienceLevel'),
-    };
+      technology: formData.get(idTechnology),
+      location: formData.get(idLocation),
+      experienceLevel: formData.get(idExperienceLevel)
+    }
 
-    onSearch(filters);
-  };
+    onSearch(filters)
+  }
 
   const handleTextChange = (event) => {
-    const text = event.target.value;
-    onTextFilter(text);
-  };
+    const text = event.target.value
+    setSearchText(text) // actualizamos el input inmediatamente
+
+    // Debounce: Cancelar el timeout anterior
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+    }
+
+    timeoutId = setTimeout(() => {
+      onTextFilter(text)
+    }, 500)
+  }
+
+  return {
+    searchText,
+    handleSubmit,
+    handleTextChange
+  }
+}
+
+export function SearchFormSection ({ onTextFilter, onSearch }) {
+  const idText = useId()
+  const idTechnology = useId()
+  const idLocation = useId()
+  const idExperienceLevel = useId()
+
+  const {
+    handleSubmit,
+    handleTextChange
+  } = useSearchForm({ idTechnology, idLocation, idExperienceLevel, idText, onSearch, onTextFilter })
 
   return (
     <section className="jobs-search">
       <h1>Encuentra tu próximo trabajo</h1>
       <p>Explora miles de oportunidades en el sector tecnológico.</p>
 
-      <form onSubmit={handleSubmit} id="empleos-search-form" role="search">
+      <form onChange={handleSubmit} id="empleos-search-form" role="search">
         <div className="search-bar">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="icon icon-tabler icons-tabler-outline icon-tabler-search"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
+            className="icon icon-tabler icons-tabler-outline icon-tabler-search">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
             <path d="M21 21l-6 -6" />
           </svg>
 
-          <label htmlFor={idText} className="visually-hidden">
-            Buscar trabajos
-          </label>
+          
           <input
-            name="searchText"
-            id={idText}
-            type="text"
+            name={idText} id="empleos-search-input" type="text"
             placeholder="Buscar trabajos, empresas o habilidades"
             onChange={handleTextChange}
           />
-
-          <button type="submit" style={{ position: 'absolute', right: '4px' }}>
-            Buscar
-          </button>
         </div>
 
         <div className="search-filters">
-          <label htmlFor={idTechnology} className="visually-hidden">
-            Filtrar por tecnología
-          </label>
-          <select name="technology" id={idTechnology}>
+          <select name={idTechnology} id="filter-technology">
             <option value="">Tecnología</option>
             <optgroup label="Tecnologías populares">
               <option value="javascript">JavaScript</option>
@@ -87,10 +98,7 @@ export function SearchFormSection({ onTextFilter, onSearch }) {
             <option value="php">PHP</option>
           </select>
 
-          <label htmlFor={idLocation} className="visually-hidden">
-            Filtrar por ubicación
-          </label>
-          <select name="location" id={idLocation}>
+          <select name={idLocation} id="filter-location">
             <option value="">Ubicación</option>
             <option value="remoto">Remoto</option>
             <option value="cdmx">Ciudad de México</option>
@@ -99,10 +107,7 @@ export function SearchFormSection({ onTextFilter, onSearch }) {
             <option value="barcelona">Barcelona</option>
           </select>
 
-          <label htmlFor={idExperienceLevel} className="visually-hidden">
-            Filtrar por nivel de experiencia
-          </label>
-          <select name="experienceLevel" id={idExperienceLevel}>
+          <select name={idExperienceLevel} id="filter-experience-level">
             <option value="">Nivel de experiencia</option>
             <option value="junior">Junior</option>
             <option value="mid">Mid-level</option>
@@ -114,5 +119,5 @@ export function SearchFormSection({ onTextFilter, onSearch }) {
 
       <span id="filter-selected-value"></span>
     </section>
-  );
+  )
 }
