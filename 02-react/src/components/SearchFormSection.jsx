@@ -1,29 +1,29 @@
-import { useId } from "react"
+import { useId } from 'react';
 
-export function SearchFormSection ({ onTextFilter, onSearch }) {
-  const idText = useId()
-  const idTechnology = useId()
-  const idLocation = useId()
-  const idExperienceLevel = useId()
+export function SearchFormSection({ onTextFilter, onSearch }) {
+  const idText = useId();
+  const idTechnology = useId();
+  const idLocation = useId();
+  const idExperienceLevel = useId();
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    
-    const formData = new FormData(event.target)
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
 
     const filters = {
-      technology: formData.get(idTechnology),
-      location: formData.get(idLocation),
-      experienceLevel: formData.get(idExperienceLevel)
-    }
+      technology: formData.get('technology'),
+      location: formData.get('location'),
+      experienceLevel: formData.get('experienceLevel'),
+    };
 
-    onSearch(filters)
-  }
+    onSearch(filters);
+  };
 
   const handleTextChange = (event) => {
-    const text = event.target.value
-    onTextFilter(text)
-  }
+    const text = event.target.value;
+    onTextFilter(text);
+  };
 
   return (
     <section className="jobs-search">
@@ -32,26 +32,44 @@ export function SearchFormSection ({ onTextFilter, onSearch }) {
 
       <form onSubmit={handleSubmit} id="empleos-search-form" role="search">
         <div className="search-bar">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
-            className="icon icon-tabler icons-tabler-outline icon-tabler-search">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="icon icon-tabler icons-tabler-outline icon-tabler-search"
+          >
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
             <path d="M21 21l-6 -6" />
           </svg>
 
-          
+          <label htmlFor={idText} className="visually-hidden">
+            Buscar trabajos
+          </label>
           <input
-            name={idText} id="empleos-search-input" type="text"
+            name="searchText"
+            id={idText}
+            type="text"
             placeholder="Buscar trabajos, empresas o habilidades"
             onChange={handleTextChange}
           />
-          
-          <button type="submit" style={{ position: 'absolute', right: '4px' }}>Buscar</button>
+
+          <button type="submit" style={{ position: 'absolute', right: '4px' }}>
+            Buscar
+          </button>
         </div>
 
         <div className="search-filters">
-          <select name={idTechnology} id="filter-technology">
+          <label htmlFor={idTechnology} className="visually-hidden">
+            Filtrar por tecnología
+          </label>
+          <select name="technology" id={idTechnology}>
             <option value="">Tecnología</option>
             <optgroup label="Tecnologías populares">
               <option value="javascript">JavaScript</option>
@@ -69,7 +87,10 @@ export function SearchFormSection ({ onTextFilter, onSearch }) {
             <option value="php">PHP</option>
           </select>
 
-          <select name={idLocation} id="filter-location">
+          <label htmlFor={idLocation} className="visually-hidden">
+            Filtrar por ubicación
+          </label>
+          <select name="location" id={idLocation}>
             <option value="">Ubicación</option>
             <option value="remoto">Remoto</option>
             <option value="cdmx">Ciudad de México</option>
@@ -78,7 +99,10 @@ export function SearchFormSection ({ onTextFilter, onSearch }) {
             <option value="barcelona">Barcelona</option>
           </select>
 
-          <select name={idExperienceLevel} id="filter-experience-level">
+          <label htmlFor={idExperienceLevel} className="visually-hidden">
+            Filtrar por nivel de experiencia
+          </label>
+          <select name="experienceLevel" id={idExperienceLevel}>
             <option value="">Nivel de experiencia</option>
             <option value="junior">Junior</option>
             <option value="mid">Mid-level</option>
@@ -90,5 +114,5 @@ export function SearchFormSection ({ onTextFilter, onSearch }) {
 
       <span id="filter-selected-value"></span>
     </section>
-  )
+  );
 }
