@@ -1,60 +1,72 @@
-import { useId, useState } from "react"
+import { useId, useState, useRef } from 'react';
 
+let timeoutId = null;
 
-let timeoutId = null
-
-const useSearchForm = ({ idTechnology, idLocation, idExperienceLevel, idText, onSearch, onTextFilter }) => {
-  const [searchText, setSearchText] = useState("")
+const useSearchForm = ({
+  idTechnology,
+  idLocation,
+  idExperienceLevel,
+  idText,
+  onSearch,
+  onTextFilter,
+}) => {
+  const miRef = useRef('hola');
+  const [searchText, setSearchText] = useState('');
+  console.log(miRef.current);
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    
-    const formData = new FormData(event.currentTarget)
-    
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+
     if (event.target.name === idText) {
-      return // ya lo manejamos en onChange
+      return; // ya lo manejamos en onChange
     }
 
     const filters = {
       technology: formData.get(idTechnology),
       location: formData.get(idLocation),
-      experienceLevel: formData.get(idExperienceLevel)
-    }
+      experienceLevel: formData.get(idExperienceLevel),
+    };
 
-    onSearch(filters)
-  }
+    onSearch(filters);
+  };
 
   const handleTextChange = (event) => {
-    const text = event.target.value
-    setSearchText(text) // actualizamos el input inmediatamente
+    const text = event.target.value;
+    setSearchText(text); // actualizamos el input inmediatamente
 
     // Debounce: Cancelar el timeout anterior
     if (timeoutId) {
-      clearTimeout(timeoutId)
+      clearTimeout(timeoutId);
     }
 
     timeoutId = setTimeout(() => {
-      onTextFilter(text)
-    }, 500)
-  }
+      onTextFilter(text);
+    }, 500);
+  };
 
   return {
     searchText,
     handleSubmit,
-    handleTextChange
-  }
-}
+    handleTextChange,
+  };
+};
 
-export function SearchFormSection ({ onTextFilter, onSearch }) {
-  const idText = useId()
-  const idTechnology = useId()
-  const idLocation = useId()
-  const idExperienceLevel = useId()
+export function SearchFormSection({ onTextFilter, onSearch }) {
+  const idText = useId();
+  const idTechnology = useId();
+  const idLocation = useId();
+  const idExperienceLevel = useId();
 
-  const {
-    handleSubmit,
-    handleTextChange
-  } = useSearchForm({ idTechnology, idLocation, idExperienceLevel, idText, onSearch, onTextFilter })
+  const { handleSubmit, handleTextChange } = useSearchForm({
+    idTechnology,
+    idLocation,
+    idExperienceLevel,
+    idText,
+    onSearch,
+    onTextFilter,
+  });
 
   return (
     <section className="jobs-search">
@@ -63,17 +75,27 @@ export function SearchFormSection ({ onTextFilter, onSearch }) {
 
       <form onChange={handleSubmit} id="empleos-search-form" role="search">
         <div className="search-bar">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
-            className="icon icon-tabler icons-tabler-outline icon-tabler-search">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="icon icon-tabler icons-tabler-outline icon-tabler-search"
+          >
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
             <path d="M21 21l-6 -6" />
           </svg>
 
-          
           <input
-            name={idText} id="empleos-search-input" type="text"
+            name={idText}
+            id="empleos-search-input"
+            type="text"
             placeholder="Buscar trabajos, empresas o habilidades"
             onChange={handleTextChange}
           />
@@ -119,5 +141,5 @@ export function SearchFormSection ({ onTextFilter, onSearch }) {
 
       <span id="filter-selected-value"></span>
     </section>
-  )
+  );
 }

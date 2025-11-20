@@ -148,10 +148,10 @@ nav {
     transition: color 0.2s;
     font-weight: 500;
 
-    &:hover, &:focus {
+    /* &:hover, &:focus {
       color: var(--primary);
       outline: none;
-    }
+    } */
   }
 }
 
