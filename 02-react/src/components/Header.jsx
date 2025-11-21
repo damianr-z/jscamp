@@ -3,7 +3,7 @@ import { Link } from './Link';
 export function Header() {
   return (
     <header>
-      <Link href="/" style={{ textDecoration: 'none' }}>
+      <Link href="/" style={{ textDecoration: 'none' }} exact>
         <h1 style={{ color: 'white' }}>
           <svg
             fill="none"
@@ -22,8 +22,12 @@ export function Header() {
       </Link>
 
       <nav>
-        <Link href="/search">Empleos</Link>
-        <Link href="/contact">Contact</Link>
+        <Link href="/search" exact={false}>
+          Empleos
+        </Link>
+        <Link href="/contact" exact={false}>
+          Contact
+        </Link>
 
         <a href="/search">Sin SPA</a>
       </nav>

@@ -1,7 +1,7 @@
 import { useRouter } from '../hooks/useRouter';
 import styles from './Link.module.css';
 
-export function Link({ href, children, ...restOfProps }) {
+export function Link({ href, children, exact = true, ...restOfProps }) {
   const { navigateTo, currentPath } = useRouter();
 
   const handleClick = (event) => {
@@ -9,7 +9,7 @@ export function Link({ href, children, ...restOfProps }) {
     navigateTo(href);
   };
 
-  const isActive = href === currentPath;
+  const isActive = exact ? href === currentPath : currentPath.startsWith(href);
 
   return (
     <a

@@ -1,4 +1,4 @@
-import { useId, useState, useRef } from 'react';
+import { useId, useState } from 'react';
 
 let timeoutId = null;
 
@@ -10,9 +10,7 @@ const useSearchForm = ({
   onSearch,
   onTextFilter,
 }) => {
-  const miRef = useRef('hola');
   const [searchText, setSearchText] = useState('');
-  console.log(miRef.current);
 
   const handleSubmit = (event) => {
     event.preventDefault();
