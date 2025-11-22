@@ -8,6 +8,18 @@ export function useJobSearch(jobsData, resultsPerPage = 4) {
   });
   const [textToFilter, setTextToFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  const hasActiveFilters = Object.values(filters).some((value) => value !== '') || textToFilter !== '';
+
+  const handleClearFilters = () => {
+    setFilters({
+      technology: '',
+      location: '',
+      experienceLevel: '',
+    });
+    setTextToFilter('');
+  };
 
   // Filter jobs based on current filters
   const filteredJobs = useMemo(() => {
@@ -72,10 +84,12 @@ export function useJobSearch(jobsData, resultsPerPage = 4) {
     pagedResults,
     totalPages,
     totalResults: filteredJobs.length,
+    hasActiveFilters,
 
     // Handler functions
     handleSearch,
     handleTextFilter,
     handlePageChange,
+    handleClearFilters,
   };
 }

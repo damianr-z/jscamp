@@ -1,71 +1,86 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
-import { Pagination } from '../components/Pagination.jsx'
-import { SearchFormSection } from '../components/SearchFormSection.jsx'
-import { JobListings } from '../components/JobListings.jsx'
+import { Pagination } from '../components/Pagination.jsx';
+import { SearchFormSection } from '../components/SearchFormSection.jsx';
+import { JobListings } from '../components/JobListings.jsx';
 
-const RESULTS_PER_PAGE = 4
+const RESULTS_PER_PAGE = 4;
 
 const useFilters = () => {
   const [filters, setFilters] = useState({
-      technology: '',
-      location: '',
-      experienceLevel: ''
-    })
-  const [textToFilter, setTextToFilter] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
+    technology: '',
+    location: '',
+    experienceLevel: '',
+  });
+  const [textToFilter, setTextToFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const [jobs, setJobs] = useState([])
-  const [total, setTotal] = useState(0)
-  const [loading, setLoading] = useState(true)
+  const [jobs, setJobs] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchJobs() {
       try {
-        setLoading(true)
+        setLoading(true);
 
-        const params = new URLSearchParams()
-        if (textToFilter) params.append('text', textToFilter)
-        if (filters.technology) params.append('technology', filters.technology)
-        if (filters.location) params.append('type', filters.location)
-        if (filters.experienceLevel) params.append('level', filters.experienceLevel)
+        const params = new URLSearchParams();
+        if (textToFilter) params.append('text', textToFilter);
+        if (filters.technology) params.append('technology', filters.technology);
+        if (filters.location) params.append('type', filters.location);
+        if (filters.experienceLevel)
+          params.append('level', filters.experienceLevel);
 
-        const offset = (currentPage - 1) * RESULTS_PER_PAGE
-        params.append('limit', RESULTS_PER_PAGE)
-        params.append('offset', offset)
+        const offset = (currentPage - 1) * RESULTS_PER_PAGE;
+        params.append('limit', RESULTS_PER_PAGE);
+        params.append('offset', offset);
 
-        const queryParams = params.toString()
-      
-        const response = await fetch(`https://jscamp-api.vercel.app/api/jobs?${queryParams}`)
-        const json = await response.json()
+        const queryParams = params.toString();
 
-        setJobs(json.data)
-        setTotal(json.total)
+        const response = await fetch(
+          `https://jscamp-api.vercel.app/api/jobs?${queryParams}`
+        );
+        const json = await response.json();
+
+        setJobs(json.data);
+        setTotal(json.total);
       } catch (error) {
-        console.error('Error fetching jobs:', error)
+        console.error('Error fetching jobs:', error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
 
-    fetchJobs()
-  }, [filters, textToFilter, currentPage])
+    fetchJobs();
+  }, [filters, textToFilter, currentPage]);
 
-  const totalPages = Math.ceil(total / RESULTS_PER_PAGE)
+  const totalPages = Math.ceil(total / RESULTS_PER_PAGE);
+  const hasActiveFilters =
+    Object.values(filters).some((value) => value !== '') || textToFilter !== '';
 
   const handlePageChange = (page) => {
-    setCurrentPage(page)
-  }
+    setCurrentPage(page);
+  };
 
   const handleSearch = (filters) => {
-    setFilters(filters)
-    setCurrentPage(1)
-  }
+    setFilters(filters);
+    setCurrentPage(1);
+  };
 
   const handleTextFilter = (newTextToFilter) => {
-    setTextToFilter(newTextToFilter)
-    setCurrentPage(1)
-  }
+    setTextToFilter(newTextToFilter);
+    setCurrentPage(1);
+  };
+
+  const handleClearFilters = () => {
+    setFilters({
+      technology: '',
+      location: '',
+      experienceLevel: '',
+    });
+    setTextToFilter('');
+    setCurrentPage(1);
+  };
 
   return {
     loading,
@@ -73,11 +88,15 @@ const useFilters = () => {
     total,
     totalPages,
     currentPage,
+    filters,
+    textToFilter,
+    hasActiveFilters,
     handlePageChange,
     handleSearch,
-    handleTextFilter
-  }
-}
+    handleTextFilter,
+    handleClearFilters,
+  };
+};
 
 export function SearchPage() {
   const {
@@ -86,30 +105,53 @@ export function SearchPage() {
     loading,
     totalPages,
     currentPage,
+    filters,
+    textToFilter,
+    hasActiveFilters,
     handlePageChange,
     handleSearch,
-    handleTextFilter
-  } = useFilters()
+    handleTextFilter,
+    handleClearFilters,
+  } = useFilters();
 
   const title = loading
     ? `Cargando... - DevJobs`
-    : `Resultados: ${total}, Página ${currentPage} - DevJobs`
+    : `Resultados: ${total}, Página ${currentPage} - DevJobs`;
 
   return (
     <main>
       <title>{title}</title>
-      <meta name="description" content="Explora miles de oportunidades laborales en el sector tecnológico. Encuentra tu próximo empleo en DevJobs." />
+      <meta
+        name="description"
+        content="Explora miles de oportunidades laborales en el sector tecnológico. Encuentra tu próximo empleo en DevJobs."
+      />
 
-      <SearchFormSection onSearch={handleSearch} onTextFilter={handleTextFilter} />
+      <SearchFormSection
+        onSearch={handleSearch}
+        onTextFilter={handleTextFilter}
+        filters={filters}
+        textToFilter={textToFilter}
+      />
+
+      {hasActiveFilters && (
+        <button
+          onClick={handleClearFilters}
+          style={{ margin: '1rem auto', display: 'block' }}
+        >
+          Clear Filters
+        </button>
+      )}
 
       <section>
         <h2 style={{ textAlign: 'center' }}>Resultados de búsqueda</h2>
 
-        {
-          loading ? <p>Cargando empleos...</p> : <JobListings jobs={jobs} />
-        }
-        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+        {loading ? <p>Cargando empleos...</p> : <JobListings jobs={jobs} />}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </section>
     </main>
-  )
+  );
 }

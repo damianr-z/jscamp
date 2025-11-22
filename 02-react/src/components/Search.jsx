@@ -11,9 +11,11 @@ export default function Search() {
     pagedResults,
     totalPages,
     currentPage,
+    hasActiveFilters,
     handleSearch,
     handleTextFilter,
     handlePageChange,
+    handleClearFilters,
   } = useJobSearch(jobsData, RESULTS_PER_PAGE);
 
   return (
@@ -22,7 +24,9 @@ export default function Search() {
         onSearch={handleSearch}
         onTextFilter={handleTextFilter}
       />
-
+      {hasActiveFilters && (
+        <button onClick={handleClearFilters}>Clear filters</button>
+      )}
       <section>
         <JobListings jobs={pagedResults} />
         <Pagination
